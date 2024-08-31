@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ready to Putt?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="https://babywolf.productions/wp-content/uploads/2024/08/Putters-Logo-black-300x114.png" alt="Putters Logo" width="300" height="114">
+        <h1 id="mainHeading">READY TO PUTT?</h1>
+        <h2 id="subHeading">Share your wins and losses to be in with a chance to win four tickets to THE CUBE with drinks on arrival and food from THE BUTCHER*.</h2>
+        
+        <div class="terms-box">
+            <h3><a href="https://www.urbanplayground.co.uk/terms-conditions">Terms and conditions:</a></h3>
+            <ul>
+                <li>The video must be original and unedited.</li>
+                <li>No offensive or inappropriate content to be submitted.</li>
+                <li>The winner of the competition will be contacted via the email address they use at the point of video submission.</li>
+                <li>By submitting a video, you grant Urban Playground the right to use, modify and distribute the video for promotional purposes without further compensation.</li>
+                <li>Personal information collected will be used for competition administration purposes and future marketing communications from Urban Playground and other Mellors Group businesses.</li>
+                <li>Urban Playground is not responsible for any injury or damages incurred during the filming of the video.</li>
+                <li>By submitting a video, participants agree to these terms and conditions</li>
+            </ul>
+        </div>
+
+        <div class="checkbox-container">
+            <label class="checkbox-wrapper">
+                <input id="termsCheckbox" type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+            <span class="checkbox-text">
+                I agree to the <a class="terms-link" href="https://www.urbanplayground.co.uk/terms-conditions">terms and conditions</a>
+            </span>
+        </div>
+
+        <div id="uploadContainer" class="upload-container">
+            <div class="user-data-form">
+                <input id="userName" type="text" placeholder="Your Name" required>
+                <input id="userEmail" type="email" placeholder="Your Email" required>
+            </div>
+            <div id="uploadBox" class="upload-box">
+                <div class="upload-icon">📷</div>
+                Click here to select a video or drag and drop a file
+            </div>
+            <input id="videoUpload" type="file" accept="video/*" style="display: none;">
+            <div id="previewContainer">
+                <video id="previewVideo" preload="metadata" controls width="300" height="150"></video>
+                <button id="cancelUpload">Cancel Selection</button>
+                <button id="submitVideoBtn">SUBMIT VIDEO</button>
+            </div>
+        </div>
+
+        <div id="progressContainer">
+            <div id="progressBar"></div>
+            <div id="uploadingText">Uploading</div>
+        </div>
+
+        <div id="afterSubmit">
+            <h3>Upload Complete! 🎉</h3>
+            Thank you for participating in our crazy golf competition. Your video has been successfully uploaded.
+            Good luck, and may the best putter win!
+        </div>
+    </div>
+
+    <div id="congratsMessage">Congratulations! 🏆 Your video has been uploaded successfully!</div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
