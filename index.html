@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Playground Crazy Golf Competition</title>
+      <link rel="icon" type="image/x-icon" href="https://fiverr-res.cloudinary.com/image/upload/f_auto,q_auto/v1/secured-attachments/messaging_message/attachment/b6a117dbdfb47b3564b2880041206136-1724869495261/Putters-Logo-black.png?__cld_token__=exp=1725057701~hmac=a4dd6a329455b3be234354930f62d6ca67b05ca382e7b11d1a294e0580593723">
+
+    <link href="https://db.onlinewebfonts.com/c/04a368eb831dba18ea9d0e968d2136fd?family=Atrament+W01+Regular" rel="stylesheet">    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Atrament W01 Regular";
+            background-color: #ff3131;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            max-width: 200px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .terms-box {
+            height: 200px;
+            overflow-y: scroll;
+            border: 2px solid white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .terms-box h3 {
+            margin-bottom: 10px;
+        }
+
+        .terms-box ul {
+            padding-left: 20px;
+        }
+
+        .checkbox-container {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .checkbox-wrapper input {
+            display: none;
+        }
+
+        .checkmark {
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-wrapper input:checked ~ .checkmark {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        .checkmark:after {
+            content: "✓";
+            color: white;
+            font-size: 20px;
+            display: none;
+        }
+
+        .checkbox-wrapper input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .checkbox-text {
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .terms-link {
+            color: #FFD700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .terms-link:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #FFD700;
+            visibility: hidden;
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+        }
+
+        .terms-link:hover:after {
+            visibility: visible;
+            transform: scaleX(1);
+        }
+
+        .upload-container {
+            display: none;
+            margin-top: 12px;
+        }
+
+        .upload-box {
+            border: 3px dashed white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-box:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        #videoUpload {
+            display: none;
+        }
+
+        #previewContainer {
+            display: none;
+            margin-top: 10px;
+        }
+
+        #previewVideo {
+            width: 280px;
+            height: 250px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+            background-color: #000; /* Add a black background */
+        }
+
+        #cancelUpload {
+            display: block;
+            background-color: white;
+            color: #ff3131;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 20px;
+            margin: 10px auto;
+            transition: all 0.3s ease;
+        }
+
+        #cancelUpload:hover {
+            background-color: #ff3131;
+            color: white;
+        }
+
+        #submitVideoBtn {
+            display: block;
+            background-color: white;
+            color: #ff3131;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 30px;
+            margin: 20px auto;
+            transition: all 0.3s ease;
+        }
+
+        #submitVideoBtn:hover {
+            background-color: #ff3131;
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        #progressContainer {
+            display: none;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            margin-top: 30px;
+            overflow: hidden;
+            position: relative;
+            height: 60px;
+        }
+
+        #progressBar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            text-align: center;
+            line-height: 60px;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            transition: width 0.5s ease;
+        }
+
+        #uploadingText {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        @keyframes ellipsis {
+            0% { content: '.'; }
+            33% { content: '..'; }
+            66% { content: '...'; }
+            100% { content: ''; }
+        }
+
+        #uploadingText::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            text-align: left;
+            animation: ellipsis 1.5s infinite;
+        }
+
+        #congratsMessage {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            font-size: 2rem;
+            text-align: center;
+            z-index: 1000;
+            animation: popIn 0.5s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            80% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        #confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        #afterSubmit {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            font-size: 1.2rem;
+        }
+
+        .user-data-form {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .user-data-form input {
+            width: 48%; /* Adjust this value to control the gap between inputs */
+            padding: 10px;
+            border: 2px solid white;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .user-data-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .upload-box {
+                padding: 20px;
+            }
+
+            .upload-icon {
+                font-size: 36px;
+            }
+            .checkbox-container {
+                margin: 20px 0;
+                
+            }
+    
+            .checkbox-wrapper {
+                
+                padding: 15px 10px;
+            
+            }
+    
+            
+    
+            
+            .checkmark {
+                width: 20px;
+                height: 20px;
+               
+            }
+
+            .user-data-form {
+                flex-direction: column;
+            }
+
+            .user-data-form input {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://fiverr-res.cloudinary.com/image/upload/f_auto,q_auto/v1/secured-attachments/messaging_message/attachment/b6a117dbdfb47b3564b2880041206136-1724869495261/Putters-Logo-black.png?__cld_token__=exp=1725057701~hmac=a4dd6a329455b3be234354930f62d6ca67b05ca382e7b11d1a294e0580593723" alt="Urban Playground Logo" class="logo">
+        
+        <h1 id="mainHeading">READY TO PUTT?</h1>
+        <h2 id="subHeading">Share your wins and losses to be in with a chance to win four tickets to THE CUBE with drinks on arrival and food from THE BUTCHER*.</h2>
+        
+        <div class="terms-box">
+            <h3><a href="https://www.urbanplayground.co.uk/terms-conditions">Terms and conditions:</a></h3>
+            <ul>
+                <li>The video must be original and unedited.</li>
+                <li>No offensive or inappropriate content to be submitted.</li>
+                <li>The winner of the competition will be contacted via the email address they use at the point of video submission.</li>
+                <li>By submitting a video, you grant Urban Playground the right to use, modify and distribute the video for promotional purposes without further compensation.</li>
+                <li>Personal information collected will be used for competition administration purposes and future marketing communications from Urban Playground and other Mellors Group businesses.</li>
+                <li>Urban Playground is not responsible for any injury or damages incurred during the filming of the video.</li>
+                <li>By submitting a video, participants agree to these terms and conditions</li>
+            </ul>
+        </div>
+        
+        <div class="checkbox-container">
+            <label class="checkbox-wrapper">
+                <input type="checkbox" id="termsCheckbox">
+                <span class="checkmark"></span>
+                <span class="checkbox-text">
+                    I agree to the <a href="https://www.urbanplayground.co.uk/terms-conditions" class="terms-link">terms and conditions</a>
+                </span>
+            </label>
+        </div>
+        
+        <div class="upload-container" id="uploadContainer">
+            <div class="user-data-form">
+                <input type="text" id="userName" placeholder="Your Name" required>
+                <input type="email" id="userEmail" placeholder="Your Email" required>
+            </div>
+            <div class="upload-box" id="uploadBox">
+                <div class="upload-icon">📷</div>
+                <p>Click here to select a video or drag and drop a file</p>
+            </div>
+            <input type="file" id="videoUpload" accept="video/*">
+            <div id="previewContainer">
+                <video id="previewVideo" controls preload="metadata"></video>
+                <button id="cancelUpload">Cancel Selection</button>
+                <button id="submitVideoBtn">SUBMIT VIDEO</button>
+            </div>
+        </div>
+        
+        <div id="progressContainer">
+            <div id="progressBar"></div>
+            <div id="uploadingText">Uploading</div>
+        </div>
+        
+        <div id="afterSubmit">
+            <h3>Upload Complete! 🎉</h3>
+            <p>Thank you for participating in our crazy golf competition. Your video has been successfully uploaded.</p>
+            <p>Good luck, and may the best putter win!</p>
+        </div>
+    </div>
+
+    <div id="congratsMessage">
+        Congratulations! 🏆<br>Your video has been uploaded successfully!
+    </div>
+
+    <canvas id="confetti"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+    const teamId = "01J5QRF51G91BE27WM5SNS3BAY";
+    const apiKey = "y0sMWl9TRh-nF7A5,gHBOUw:fc8k6p!$DdmbIGuzE*S_i^ZL4NKY3aoQ=2tr>P1X";
+    let packageToken;
+    let packageId;
+    let uploadId;
+
+    const videoUpload = document.getElementById('videoUpload');
+    const submitVideoBtn = document.getElementById('submitVideoBtn');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const afterSubmit = document.getElementById('afterSubmit');
+
+    async function createPackage(description, name, recipientEmail, userName, userEmail) {
+        const fullDescription = `${description}\nSender Name: ${userName},  \nSender Email: ${userEmail}`;
+        const payload = JSON.stringify({
+            description: fullDescription,
+            name: name,
+            recipients: [recipientEmail]
+        });
+        console.log('Creating package with payload:', payload);
+
+        const response = await fetch(`https://api.massive.app/v1/teams/${teamId}/packages`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-KEY': apiKey
+            },
+            body: payload
+        });
+
+        const responseText = await response.text();
+        console.log('Create package response:', responseText);
+
+        if (!response.ok) {
+            throw new Error(`Failed to create package: ${response.status} ${response.statusText}`);
+        }
+
+        const data = JSON.parse(responseText);
+        packageToken = data.access_token;
+        packageId = data.id;
+        console.log('Package created. ID:', packageId, 'Token:', packageToken);
+        return data;
+    }
+
+    async function addFileToPackage(fileName, lastModified) {
+        const payload = JSON.stringify({
+            kind: 'file',
+            name: fileName,
+            path: '',
+            last_modified: new Date(lastModified).toISOString()
+        });
+        console.log('Adding file to package with payload:', payload);
+
+        const response = await fetch(`https://api.massive.app/v1/packages/${packageId}/files`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Package-Token': packageToken
+            },
+            body: payload
+        });
+
+        const responseText = await response.text();
+        console.log('Add file to package response:', responseText);
+
+        if (!response.ok) {
+            throw new Error(`Failed to add file to package: ${response.status} ${response.statusText}`);
+        }
+
+        const data = JSON.parse(responseText);
+        console.log('File added to package. File ID:', data.file.id);
+        return data;
+    }
+
+    async function createFileInCloudStorage(createBlueprint) {
+        console.log('Creating file in cloud storage with blueprint:', createBlueprint);
+
+        const response = await fetch(createBlueprint.url, {
+            method: createBlueprint.method,
+            headers: createBlueprint.headers
+        });
+
+        const responseText = await response.text();
+        console.log('Create file in cloud storage response:', responseText);
+
+        if (!response.ok) {
+            throw new Error(`Failed to create file in cloud storage: ${response.status} ${response.statusText}`);
+        }
+
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(responseText, "text/xml");
+        uploadId = xmlDoc.getElementsByTagName("UploadId")[0].textContent;
+        console.log('File created in cloud storage. Upload ID:', uploadId);
+    }
+
+    async function getUploadUrls(fileId, numberOfChunks) {
+        const payload = JSON.stringify({ upload_id: uploadId });
+        console.log('Getting upload URLs with payload:', payload);
+
+        const response = await fetch(`https://api.massive.app/v1/packages/${packageId}/files/${fileId}?start=0&count=${numberOfChunks}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Package-Token': packageToken
+            },
+            body: payload
+        });
+
+        const responseText = await response.text();
+        console.log('Get upload URLs response:', responseText);
+
+        if (!response.ok) {
+            throw new Error(`Failed to get upload URLs: ${response.status} ${response.statusText}`);
+        }
+
+        return JSON.parse(responseText);
+    }
+
+    async function uploadChunk(url, chunk, method, partNumber) {
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/octet-stream'
+            },
+            body: chunk
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to upload chunk: ${response.status} ${response.statusText}`);
+        }
+
+        const etag = response.headers.get('ETag').replace(/"/g, ''); // Remove quotes
+        console.log(`Chunk ${partNumber} uploaded. ETag:`, etag);
+        return { partNumber: partNumber.toString(), etag: etag };
+    }
+
+    async function finalizeFile(fileId, chunkDetails, fileSize) {
+        const payload = {
+            size: fileSize,
+            file_extras: {
+                upload_id: uploadId
+            },
+            chunk_extras: chunkDetails.map(chunk => ({
+                partNumber: chunk.partNumber,
+                etag: chunk.etag
+            }))
+        };
+        console.log('Finalizing file with payload:', JSON.stringify(payload, null, 2));
+
+        const response = await fetch(`https://api.massive.app/v1/packages/${packageId}/files/${fileId}/finalize`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Package-Token': packageToken
+            },
+            body: JSON.stringify(payload)
+        });
+
+        console.log('Finalize file response status:', response.status);
+
+        if (!response.ok) {
+            const responseText = await response.text();
+            console.error('Finalize file error response:', responseText);
+            throw new Error(`Failed to finalize file: ${response.status} ${response.statusText} - ${responseText}`);
+        }
+
+        if (response.status === 204) {
+            console.log('File finalized successfully');
+        }
+    }
+
+    async function finalizePackage() {
+        console.log('Finalizing package...');
+        const response = await fetch(`https://api.massive.app/v1/packages/${packageId}/finalize`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Package-Token': packageToken
+            }
+        });
+
+        console.log('Finalize package response status:', response.status);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Failed to finalize package: ${response.status} ${response.statusText} - ${errorText}`);
+        }
+
+        if (response.status === 204) {
+            console.log('Package finalized successfully');
+        }
+    }
+
+    async function uploadVideo(file) {
+        try {
+            const userName = document.getElementById('userName').value;
+            const userEmail = document.getElementById('userEmail').value;
+
+            console.log('User data:', { userName, userEmail });
+
+            if (!userName || !userEmail) {
+                alert('Please fill in your name and email before uploading.');
+                return;
+            }
+
+            console.log('Creating package...');
+            const packageData = await createPackage("Video from Urban Playground Crazy Golf Competition.", file.name, "andy@babywolf.productions", userName, userEmail);
+            console.log('Package created:', packageData);
+            
+            console.log('Adding file to package...');
+            const addFileResponse = await addFileToPackage(file.name, file.lastModified);
+            const fileId = addFileResponse.file.id;
+            
+            console.log('Creating file in cloud storage...');
+            await createFileInCloudStorage(addFileResponse.create_blueprint);
+
+            const chunkSize = 5 * 1024 * 1024; // 5MB chunks
+            const totalChunks = Math.ceil(file.size / chunkSize);
+            console.log('Getting upload URLs...');
+            const uploadUrls = await getUploadUrls(fileId, totalChunks);
+
+            const chunkDetails = [];
+            let completed = 0;
+
+            for (let i = 0; i < totalChunks; i++) {
+                const chunk = file.slice(i * chunkSize, (i + 1) * chunkSize);
+                const uploadData = uploadUrls[i];
+                
+                console.log(`Uploading chunk ${i + 1}/${totalChunks}...`);
+                const chunkInfo = await uploadChunk(uploadData.url, chunk, uploadData.method, i + 1);
+                console.log('Chunk info:', JSON.stringify(chunkInfo));
+                chunkDetails.push(chunkInfo);
+
+                completed += chunk.size;
+                updateProgress(completed, file.size);
+            }
+
+            console.log('All chunk details:', JSON.stringify(chunkDetails, null, 2));
+            console.log('Finalizing file...');
+            await finalizeFile(fileId, chunkDetails, file.size);
+
+            console.log('Finalizing package...');
+            await finalizePackage();
+            
+            console.log('Upload complete!');
+            showCongratulations();
+        } catch (error) {
+            console.error('Error:', error);
+            console.error('Error details:', error.message);
+            console.error('Error stack:', error.stack);
+            alert('File upload failed: ' + error.message);
+            // Show upload options again in case of error
+            uploadContainer.style.display = 'block';
+            progressContainer.style.display = 'none';
+            resetUpload();
+        }
+    }
+
+    function updateProgress(completed, total) {
+        const percentage = (completed / total) * 100;
+        progressBar.style.width = `${percentage}%`;
+        progressBar.textContent = `${percentage.toFixed(0)}%`;
+
+        if (percentage >= 100) {
+            setTimeout(() => {
+                progressContainer.style.display = 'none';
+                showCongratulations();
+                // Show upload options again
+                uploadContainer.style.display = 'block';
+                resetUpload();
+            }, 500);
+        }
+    }
+
+    function showCongratulations() {
+        const congratsMessage = document.getElementById('congratsMessage');
+        congratsMessage.style.display = 'block';
+
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+
+        setTimeout(() => {
+            congratsMessage.style.display = 'none';
+            afterSubmit.style.display = 'block';
+            
+            // Hide the "Upload Complete" message after 5 seconds
+            setTimeout(() => {
+                afterSubmit.style.display = 'none';
+                // Show upload options again
+                uploadContainer.style.display = 'block';
+                resetUpload();
+            }, 5000);
+        }, 3000);
+    }
+
+    const termsCheckbox = document.getElementById('termsCheckbox');
+    const mainHeading = document.getElementById('mainHeading');
+    const subHeading = document.getElementById('subHeading');
+    const uploadContainer = document.getElementById('uploadContainer');
+    const uploadBox = document.getElementById('uploadBox');
+    const previewContainer = document.getElementById('previewContainer');
+    const previewVideo = document.getElementById('previewVideo');
+    const cancelUpload = document.getElementById('cancelUpload');
+
+    termsCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            uploadContainer.style.display = 'block';
+            mainHeading.textContent = 'Get Ready!';
+            subHeading.textContent = 'To be in with a chance to win, simply get your team mate to record your hole-in-one attempt and submit it to us via the button below.';
+        } else {
+            uploadContainer.style.display = 'none';
+            mainHeading.textContent = 'READY TO PUTT?';
+            subHeading.textContent = 'Share your wins and losses to be in with a chance to win four tickets to THE CUBE with drinks on arrival and food from THE BUTCHER*.';
+        }
+    });
+
+    function handleVideoFile(file) {
+        uploadBox.style.display = 'none';
+        previewContainer.style.display = 'block';
+        previewVideo.src = URL.createObjectURL(file);
+        previewVideo.load(); // This will load the metadata without playing the video
+        cancelUpload.style.display = 'inline-block';
+        submitVideoBtn.style.display = 'inline-block';
+    }
+
+    function resetUpload() {
+        uploadBox.style.display = 'block';
+        previewContainer.style.display = 'none';
+        previewVideo.src = '';
+        cancelUpload.style.display = 'none';
+        submitVideoBtn.style.display = 'none';
+        videoUpload.value = ''; // Clear the file input
+    }
+
+    uploadBox.addEventListener('click', function() {
+        videoUpload.click();
+    });
+
+    uploadBox.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+    });
+
+    uploadBox.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.style.backgroundColor = '';
+    });
+
+    uploadBox.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.style.backgroundColor = '';
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('video/')) {
+            handleVideoFile(file);
+        } else {
+            alert('Please select a valid video file.');
+        }
+    });
+
+    videoUpload.addEventListener('change', function() {
+        const file = videoUpload.files[0];
+        if (file) {
+            handleVideoFile(file);
+        }
+    });
+
+    cancelUpload.addEventListener('click', resetUpload);
+
+    submitVideoBtn.addEventListener('click', function() {
+        const file = videoUpload.files[0];
+        if (file) {
+            // Hide upload options
+            uploadContainer.style.display = 'none';
+            // Show progress container
+            progressContainer.style.display = 'block';
+            uploadVideo(file);
+        } else {
+            alert('Please select a video file to upload.');
+        }
+    });
+    </script>
+</body>
+</html>
